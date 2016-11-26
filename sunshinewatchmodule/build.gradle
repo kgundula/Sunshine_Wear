@@ -6,7 +6,7 @@ android {
     buildToolsVersion "25.0.1"
 
     defaultConfig {
-        applicationId "za.co.gundula.app.sunshinewatchmodule"
+        applicationId "com.example.android.sunshine.app"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
