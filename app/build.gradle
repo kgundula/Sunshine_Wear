@@ -40,4 +40,5 @@ dependencies {
     compile 'com.google.android.apps.muzei:muzei-api:2.0'
     compile "com.google.android.gms:play-services-gcm:${playServicesLib}"
     compile "com.google.android.gms:play-services-location:${playServicesLib}"
+    compile "com.google.android.gms:play-services-places:${playServicesLib}"
 }

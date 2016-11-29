@@ -1,1 +1,1 @@
-include ':app', ':sunshinewatchmodule', ':sunshinewatchmodule', ':sunshinewatchmodule', ':sunshinewatchmodule'
+include ':app'
