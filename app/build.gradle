@@ -14,7 +14,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -41,4 +41,5 @@ dependencies {
     compile "com.google.android.gms:play-services-gcm:${playServicesLib}"
     compile "com.google.android.gms:play-services-location:${playServicesLib}"
     compile "com.google.android.gms:play-services-places:${playServicesLib}"
+    wearApp project(':sunshinewatchface')
 }

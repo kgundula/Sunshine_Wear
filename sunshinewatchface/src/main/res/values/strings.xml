@@ -3,4 +3,28 @@
     <string name="message">Watch face tapped</string>
     <string name="my_digital_name">My Digital</string>
 
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+
+    <string name="sunday">SUN</string>
+    <string name="monday">MON</string>
+    <string name="tuesday">TUE</string>
+    <string name="wednesday">WED</string>
+    <string name="thursday">THU</string>
+    <string name="friday">FRI</string>
+    <string name="saturday">SAT</string>
+
+    <string name="january">JAN</string>
+    <string name="february">FEB</string>
+    <string name="march">MAR</string>
+    <string name="april">APR</string>
+    <string name="may">MAY</string>
+    <string name="june">JUN</string>
+    <string name="july">JUL</string>
+    <string name="august">AUG</string>
+    <string name="september">SEP</string>
+    <string name="october">OCT</string>
+    <string name="november">NOV</string>
+    <string name="december">DEC</string>
+
 </resources>

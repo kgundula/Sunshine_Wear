@@ -5,19 +5,17 @@
     <dimen name="digital_x_offset">15dp</dimen>
     <dimen name="digital_x_offset_round">25dp</dimen>
     <dimen name="digital_y_offset">90dp</dimen>
+    <dimen name="digital_date_text_size">15dp</dimen>
+    <dimen name="digital_date_text_size_round">16dp</dimen>
+    <dimen name="digital_temp_text_size">25dp</dimen>
+    <dimen name="digital_temp_text_size_round">27dp</dimen>
 
-    <integer name="index_text_start">0</integer>
-    <integer name="text_size_time">56</integer>
-    <integer name="offset_y_time">50</integer>
-    <integer name="offset_y_date">5</integer>
-    <integer name="text_size_date">25</integer>
-    <integer name="offset_x_high_temperature">5</integer>
-    <integer name="text_size_high_temperature">40</integer>
-    <integer name="offset_y_high_temperature">80</integer>
-    <integer name="offset_x_low_temperature">70</integer>
-    <integer name="text_size_low_temperature">40</integer>
-    <integer name="offset_y_low_temperature">80</integer>
-    <integer name="offset_x_weather_icon">100</integer>
-    <integer name="offset_y_weather_icon">30</integer>
+    <dimen name="digital_time_y_offset">90dp</dimen>
+    <dimen name="digital_date_y_offset">110dp</dimen>
+    <dimen name="digital_date_y_offset_round">120dp</dimen>
+    <dimen name="digital_divider_y_offset">125dp</dimen>
+    <dimen name="digital_divider_y_offset_round">135dp</dimen>
+    <dimen name="digital_weather_y_offset">160dp</dimen>
+    <dimen name="digital_weather_y_offset_round">170dp</dimen>
 
 </resources>
