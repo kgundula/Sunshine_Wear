@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '24.0.3'
+    compileSdkVersion 24
+    buildToolsVersion '24.0.1'
 
     defaultConfig {
         applicationId "com.example.android.sunshine.app"
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
     }
@@ -24,8 +24,8 @@ android {
 }
 
 ext {
-    supportLib = "25.0.1"
-    playServicesLib = "10.0.0"
+    supportLib = "24.2.1"
+    playServicesLib = "9.6.1"
 }
 
 dependencies {
@@ -41,5 +41,6 @@ dependencies {
     compile "com.google.android.gms:play-services-gcm:${playServicesLib}"
     compile "com.google.android.gms:play-services-location:${playServicesLib}"
     compile "com.google.android.gms:play-services-places:${playServicesLib}"
+    compile 'com.google.android.support:wearable:2.0.0-alpha1'
     wearApp project(':sunshinewatchface')
 }
