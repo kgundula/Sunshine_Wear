@@ -25,7 +25,7 @@ android {
 
 ext {
     supportLib = "24.2.1"
-    playServicesLib = "9.6.1"
+    playServicesLib = "9.4.0"
 }
 
 dependencies {

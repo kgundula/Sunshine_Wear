@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">SunshineWatchFace</string>
+    <string name="app_name">Sunshine WatchFace</string>
     <string name="message">Sunshine Watch face tapped</string>
-    <string name="my_digital_name">Sunshine Digital Watch Face</string>
+    <string name="watch_name">Sunshine Digital Watch Face</string>
 
     <string name="am">AM</string>
     <string name="pm">PM</string>
