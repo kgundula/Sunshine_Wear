@@ -114,7 +114,6 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
         private static final String WEATHER_PATH = "/weather";
-
         private static final String KEY_HIGH = "MAX_TEMP_KEY";
         private static final String KEY_LOW = "MIN_TEMP_KEY";
         private static final String KEY_WEATHER_ID = "WEATHER_ID_KEY";
@@ -474,17 +473,19 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
         @Override
         public void onConnected(@Nullable Bundle bundle) {
             Wearable.DataApi.addListener(mGoogleApiClient, Engine.this);
-            trigger();
+            Log.i(TAG, "Wear : Google API Client was connected");
+            //trigger();
         }
 
         @Override
         public void onConnectionSuspended(int i) {
-
+            Log.i(TAG, "Wear : Connection to Google API client was suspended");
         }
 
         @Override
         public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+            Log.e(TAG, "Wear : Connection to Google API client has failed" + connectionResult);
         }
 
         @Override

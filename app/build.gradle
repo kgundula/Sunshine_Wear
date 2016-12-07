@@ -3,7 +3,7 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '24.0.1'
+    buildToolsVersion '24.0.2'
 
     defaultConfig {
         applicationId "com.example.android.sunshine.app"
@@ -14,7 +14,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -41,6 +41,6 @@ dependencies {
     compile "com.google.android.gms:play-services-gcm:${playServicesLib}"
     compile "com.google.android.gms:play-services-location:${playServicesLib}"
     compile "com.google.android.gms:play-services-places:${playServicesLib}"
-    compile 'com.google.android.support:wearable:2.0.0-alpha1'
+    compile "com.google.android.gms:play-services-wearable:${playServicesLib}"
     wearApp project(':sunshinewatchface')
 }
