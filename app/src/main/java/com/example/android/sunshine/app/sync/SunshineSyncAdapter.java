@@ -129,7 +129,6 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
         mGoogleApiClient.connect();
 
-
     }
 
     @Override
@@ -410,6 +409,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                 updateWidgets();
                 updateMuzei();
                 notifyWeather();
+                watchFaceData();
             }
             Log.d(LOG_TAG, "Sync Complete. " + cVVector.size() + " Inserted");
             setLocationStatus(getContext(), LOCATION_STATUS_OK);
@@ -542,13 +542,34 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                     editor.putLong(lastNotificationKey, System.currentTimeMillis());
                     editor.commit();
 
-                    updateSunshineWear(getContext(), weatherId, high, low);
+
                 }
                 cursor.close();
             }
         }
     }
 
+    public void watchFaceData() {
+
+        Context context = getContext();
+
+        String locationQuery = Utility.getPreferredLocation(context);
+
+        Uri weatherUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(locationQuery, System.currentTimeMillis());
+
+        // we'll query our contentProvider, as always
+        Cursor cursor = context.getContentResolver().query(weatherUri, NOTIFY_WEATHER_PROJECTION, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int weatherId = cursor.getInt(INDEX_WEATHER_ID);
+            double high = cursor.getDouble(INDEX_MAX_TEMP);
+            double low = cursor.getDouble(INDEX_MIN_TEMP);
+
+            updateSunshineWear(getContext(), weatherId, high, low);
+        }
+        cursor.close();
+
+    }
 
     private void updateSunshineWear(Context context, int weatherId, double high, double low) {
 
@@ -559,30 +580,30 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
         mGoogleApiClient.connect();
 
-        Log.i(LOG_TAG, "Google " + high + " => " + low);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Log.i(LOG_TAG, "Sync : Temp High " + high + " => Temp Low " + low);
 
         boolean wearAvailable = mGoogleApiClient.hasConnectedApi(Wearable.API);
 
-        PutDataMapRequest putDataMapRequest = PutDataMapRequest.create(WEATHER_PATH);
-        putDataMapRequest.getDataMap().putString(KEY_HIGH, Utility.formatTemperature(context, high));
-        putDataMapRequest.getDataMap().putString(KEY_LOW, Utility.formatTemperature(context, low));
-        putDataMapRequest.getDataMap().putInt(KEY_WEATHER_ID, weatherId);
+        if (wearAvailable) {
+            PutDataMapRequest putDataMapRequest = PutDataMapRequest.create(WEATHER_PATH);
+            putDataMapRequest.getDataMap().putString(KEY_HIGH, Utility.formatTemperature(context, high));
+            putDataMapRequest.getDataMap().putString(KEY_LOW, Utility.formatTemperature(context, low));
+            putDataMapRequest.getDataMap().putInt(KEY_WEATHER_ID, weatherId);
 
-        PutDataRequest putDataRequest = putDataMapRequest.asPutDataRequest();
-        Wearable.DataApi.putDataItem(mGoogleApiClient, putDataRequest)
-                .setResultCallback(new ResultCallback<DataApi.DataItemResult>() {
-                    @Override
-                    public void onResult(DataApi.DataItemResult dataItemResult) {
-                        if (dataItemResult.getStatus().isSuccess()) {
-                            Log.i(LOG_TAG, "Weather Information Sent");
-                        } else {
-                            Log.i(LOG_TAG, "Not Sent");
+            PutDataRequest putDataRequest = putDataMapRequest.asPutDataRequest();
+            Wearable.DataApi.putDataItem(mGoogleApiClient, putDataRequest)
+                    .setResultCallback(new ResultCallback<DataApi.DataItemResult>() {
+                        @Override
+                        public void onResult(DataApi.DataItemResult dataItemResult) {
+                            if (dataItemResult.getStatus().isSuccess()) {
+                                Log.i(LOG_TAG, "Weather Information Sent");
+                            } else {
+                                Log.i(LOG_TAG, "Not Sent");
+                            }
                         }
-                    }
-                });
+                    });
 
-
+        }
     }
 
     /**

@@ -44,20 +44,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.DataMapItem;
-import com.google.android.gms.wearable.PutDataMapRequest;
-import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TimeZone;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -358,9 +354,7 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             long now = System.currentTimeMillis();
             mCalendar.setTimeInMillis(now);
 
-            String text = mAmbient
-                    ? String.format("%d:%02d", mCalendar.get(Calendar.HOUR),
-                    mCalendar.get(Calendar.MINUTE))
+            String text = mAmbient ? String.format("%d:%02d", mCalendar.get(Calendar.HOUR), mCalendar.get(Calendar.MINUTE))
                     : String.format("%d:%02d:%02d", mCalendar.get(Calendar.HOUR),
                     mCalendar.get(Calendar.MINUTE), mCalendar.get(Calendar.SECOND));
 
@@ -474,7 +468,6 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
         public void onConnected(@Nullable Bundle bundle) {
             Wearable.DataApi.addListener(mGoogleApiClient, Engine.this);
             Log.i(TAG, "Wear : Google API Client was connected");
-            //trigger();
         }
 
         @Override
@@ -529,24 +522,6 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
                     }
                 }
             }
-        }
-
-        public void trigger() {
-            PutDataMapRequest putDataMapRequest = PutDataMapRequest.create(WEATHER_PATH);
-            putDataMapRequest.getDataMap().putString("DATA", UUID.randomUUID().toString());
-            PutDataRequest request = putDataMapRequest.asPutDataRequest();
-
-            Wearable.DataApi.putDataItem(mGoogleApiClient, request)
-                    .setResultCallback(new ResultCallback<DataApi.DataItemResult>() {
-                        @Override
-                        public void onResult(DataApi.DataItemResult dataItemResult) {
-                            if (!dataItemResult.getStatus().isSuccess()) {
-                                Log.d(TAG, "Trigger failed for weather data");
-                            } else {
-                                Log.d(TAG, "Trigger success for weather data");
-                            }
-                        }
-                    });
         }
 
     }
