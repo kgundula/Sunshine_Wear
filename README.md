@@ -9,6 +9,7 @@ To use, please add a valid API key to gradle.properties in the format:
 `MyOpenWeatherMapApiKey = "WEATHER_API_KEY_HERE"`
 
 The base app Synchronizes weather information from OpenWeatherMap on Android Phones and Tablets.
+
 Advanced Android Sample App
 ===================================
 

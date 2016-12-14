@@ -2,9 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias KeyStoreAlias
+            keyPassword KeyStorePassword
+            storeFile file('/Users/kgundula/Documents/Sunshine Wear/watchface.jks')
+            storePassword KeyStorePassword
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion '24.0.2'
-
     defaultConfig {
         applicationId "com.example.android.sunshine.app"
         minSdkVersion 21
@@ -16,6 +23,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+            debuggable true
         }
     }
     buildTypes.each {
@@ -25,11 +34,12 @@ android {
 
 ext {
     supportLib = "24.2.1"
-    playServicesLib = "9.4.0"
+    playServicesLib = "9.6.1"
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    wearApp project(':sunshinewatchface')
     compile 'com.github.bumptech.glide:glide:3.5.2'
     compile "com.android.support:support-annotations:${supportLib}"
     compile "com.android.support:gridlayout-v7:${supportLib}"
@@ -42,5 +52,4 @@ dependencies {
     compile "com.google.android.gms:play-services-location:${playServicesLib}"
     compile "com.google.android.gms:play-services-places:${playServicesLib}"
     compile "com.google.android.gms:play-services-wearable:${playServicesLib}"
-    wearApp project(':sunshinewatchface')
 }

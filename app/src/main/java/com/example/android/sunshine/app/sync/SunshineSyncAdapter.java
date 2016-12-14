@@ -112,6 +112,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                     public void onConnected(Bundle bundle) {
 
                         Log.v(LOG_TAG, "Sync : Google API Client was connected");
+                        watchFaceData();
                     }
 
                     @Override
@@ -409,7 +410,6 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                 updateWidgets();
                 updateMuzei();
                 notifyWeather();
-                watchFaceData();
             }
             Log.d(LOG_TAG, "Sync Complete. " + cVVector.size() + " Inserted");
             setLocationStatus(getContext(), LOCATION_STATUS_OK);
@@ -541,7 +541,6 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putLong(lastNotificationKey, System.currentTimeMillis());
                     editor.commit();
-
 
                 }
                 cursor.close();
