@@ -144,8 +144,8 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
 
 
         Bitmap mWeatherIcon;
-        String mWeatherHigh;
-        String mWeatherLow;
+        String mWeatherHigh; // = "14";
+        String mWeatherLow; // = "12";
 
         boolean mShouldDrawColons;
         float mXOffset;
@@ -375,6 +375,35 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             }
 
             // Draw the hours.
+            int width = bounds.width();
+            int height = bounds.height();
+
+            float xtemp = width / 1.7f;
+            float ytemp = height / 5.8f;
+            float a = width / 1.7f;
+            float b = height / 4.5f;
+            float c = width / 2.9f;
+            float d = height / 4.5f;
+            float e = width / 2.8f;
+            float f = height / 14f;
+
+            if (mWeatherHigh != null && mWeatherLow != null) {
+                String max_temp = mWeatherHigh + " C";
+                canvas.drawText(max_temp, xtemp, ytemp, mHighTempPaint);
+                String min_temp = mWeatherLow + " C";
+                canvas.drawText(min_temp, a, b + mLineHeight, mLowTempPaint);
+
+                Log.i("Ygritte", "Weather High : " + mWeatherHigh + " => Weather Low : " + mWeatherLow);
+            } else {
+                Log.i("Ygritte", "Low Temp : " + mWeatherLow);
+                Log.i("Ygritte", "High Temp : " + mWeatherHigh);
+            }
+
+            if (!isInAmbientMode() && mWeatherIcon != null) {
+                canvas.drawBitmap(mWeatherIcon, e, f, mTextPaint);
+                Log.i("Ygritte", "Image Exists");
+            }
+
             float x = mXOffset;
             String hourString;
             if (is24Hour) {
@@ -386,42 +415,28 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
                 }
                 hourString = String.valueOf(hour);
             }
-            canvas.drawText(hourString, x, mYOffset, mHourPaint);
+
+            canvas.drawText(hourString, x, mYOffset + mLineHeight * 2, mHourPaint);
             x += mHourPaint.measureText(hourString);
             x += mColonWidth;
             if (isInAmbientMode() || mMute || mShouldDrawColons) {
-                canvas.drawText(COLON_STRING, x, mYOffset, mColonPaint);
+                canvas.drawText(COLON_STRING, x, mYOffset + mLineHeight * 2, mColonPaint);
             }
             x += mColonPaint.measureText(COLON_STRING);
             x += mColonWidth;
 
             // Draw the minutes.
             String minuteString = formatTwoDigitNumber(mCalendar.get(Calendar.MINUTE));
-            canvas.drawText(minuteString, x, mYOffset, mMinutePaint);
+            canvas.drawText(minuteString, x, mYOffset + mLineHeight * 2, mMinutePaint);
             x += mMinutePaint.measureText(minuteString);
 
             String date_string = getDayOfWeekString(resources, mCalendar.get(Calendar.DAY_OF_WEEK)) + ", " + getMonthOfYearString(resources, mCalendar.get(Calendar.MONTH)) + " " + mCalendar.get(Calendar.DAY_OF_MONTH) + " " + new String(mCalendar.get(Calendar.YEAR) + "");
-            canvas.drawText(date_string, mXOffset, mYOffset + mLineHeight * 2, mDatePaint);
+            canvas.drawText(date_string, mXOffset, mYOffset + mLineHeight * 3.5f, mDatePaint);
 
             x += mDatePaint.measureText(date_string);
             /*
-            if (!isInAmbientMode() && mWeatherIcon != null) {
-                canvas.drawBitmap(mWeatherIcon, x, mYOffset + mLineHeight * 2, mTextPaint);
-                Log.i("Ygritte", "Image Exists");
-            }
+
             */
-            if (mWeatherHigh != null && mWeatherLow != null) {
-                canvas.drawText(mWeatherHigh + "c", x, mYOffset + mLineHeight * 3, mHighTempPaint);
-                x += mHighTempPaint.measureText(mWeatherHigh);
-                canvas.drawText(mWeatherLow + "c", x, mYOffset + mLineHeight * 3, mLowTempPaint);
-                x += mLowTempPaint.measureText(mWeatherLow);
-
-                Log.i("Ygritte", "Weather High : " + mWeatherHigh + " => Weather Low : " + mWeatherLow);
-            } else {
-                Log.i("Ygritte", "Low Temp : " + mWeatherLow);
-                Log.i("Ygritte", "High Temp : " + mWeatherHigh);
-            }
-
 
         }
 
@@ -499,6 +514,7 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
 
                         if (dataMap.containsKey(KEY_WEATHER_ID)) {
                             int weatherId = dataMap.getInt(KEY_WEATHER_ID);
+                            Log.d(TAG, "Wear ID " + weatherId);
                             Drawable b = getResources().getDrawable(Utility.getIconResourceForWeatherCondition(weatherId));
                             Bitmap icon = null;
                             if (((BitmapDrawable) b) != null) {
