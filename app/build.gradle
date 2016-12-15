@@ -10,12 +10,12 @@ android {
             storePassword KeyStorePassword
         }
     }
-    compileSdkVersion 24
-    buildToolsVersion '24.0.2'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.example.android.sunshine.app"
         minSdkVersion 21
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
@@ -33,7 +33,7 @@ android {
 }
 
 ext {
-    supportLib = "24.2.1"
+    supportLib = "25.1.0"
     playServicesLib = "9.6.1"
 }
 

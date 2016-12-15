@@ -388,11 +388,11 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             }
             canvas.drawText(hourString, x, mYOffset, mHourPaint);
             x += mHourPaint.measureText(hourString);
-
+            x += mColonWidth;
             if (isInAmbientMode() || mMute || mShouldDrawColons) {
                 canvas.drawText(COLON_STRING, x, mYOffset, mColonPaint);
             }
-            x += mColonWidth;
+            x += mColonPaint.measureText(COLON_STRING);
             x += mColonWidth;
 
             // Draw the minutes.
@@ -404,13 +404,19 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             canvas.drawText(date_string, mXOffset, mYOffset + mLineHeight * 2, mDatePaint);
 
             x += mDatePaint.measureText(date_string);
-
+            /*
             if (!isInAmbientMode() && mWeatherIcon != null) {
                 canvas.drawBitmap(mWeatherIcon, x, mYOffset + mLineHeight * 2, mTextPaint);
+                Log.i("Ygritte", "Image Exists");
             }
+            */
             if (mWeatherHigh != null && mWeatherLow != null) {
-                canvas.drawText(mWeatherHigh + "\u00b0" + "c", x, mYOffset, mHighTempPaint);
-                canvas.drawText(mWeatherLow + "\u00b0" + "c", x, mYOffset + mLineHeight * 2, mLowTempPaint);
+                canvas.drawText(mWeatherHigh + "c", x, mYOffset + mLineHeight * 3, mHighTempPaint);
+                x += mHighTempPaint.measureText(mWeatherHigh);
+                canvas.drawText(mWeatherLow + "c", x, mYOffset + mLineHeight * 3, mLowTempPaint);
+                x += mLowTempPaint.measureText(mWeatherLow);
+
+                Log.i("Ygritte", "Weather High : " + mWeatherHigh + " => Weather Low : " + mWeatherLow);
             } else {
                 Log.i("Ygritte", "Low Temp : " + mWeatherLow);
                 Log.i("Ygritte", "High Temp : " + mWeatherHigh);
