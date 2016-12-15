@@ -161,7 +161,6 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             @Override
             public void onReceive(Context context, Intent intent) {
                 mCalendar.setTimeZone(TimeZone.getDefault());
-                //initFormats();
                 invalidate();
             }
         };
@@ -239,7 +238,6 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
 
                 // Update time zone in case it changed while we weren't visible.
                 mCalendar.setTimeZone(TimeZone.getDefault());
-                //initFormats();
                 invalidate();
             } else {
                 unregisterReceiver();
@@ -249,9 +247,6 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
                     mGoogleApiClient.disconnect();
                 }
             }
-
-            // Whether the timer should be running depends on whether we're visible (as well as
-            // whether we're in ambient mode), so we may need to start or stop the timer.
             updateTimer();
         }
 
@@ -282,10 +277,11 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             boolean isRound = insets.isRound();
             mXOffset = resources.getDimension(isRound ? R.dimen.digital_x_offset_round : R.dimen.digital_x_offset);
             float textSize = resources.getDimension(isRound ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
+            float dateTextSize = resources.getDimension(R.dimen.digital_date_text_size);
             float amPmSize = resources.getDimension(isRound ? R.dimen.digital_am_pm_size_round : R.dimen.digital_am_pm_size);
             float tempSize = resources.getDimension(isRound ? R.dimen.digital_temp_text_size_round : R.dimen.digital_temp_text_size);
 
-            mDatePaint.setTextSize(resources.getDimension(R.dimen.digital_date_text_size));
+            mDatePaint.setTextSize(dateTextSize);
             mHourPaint.setTextSize(textSize);
             mMinutePaint.setTextSize(textSize);
             mAmPmPaint.setTextSize(amPmSize);
@@ -404,8 +400,6 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             canvas.drawText(minuteString, x, mYOffset, mMinutePaint);
             x += mMinutePaint.measureText(minuteString);
 
-            //canvas.drawText(getAmPmString(mCalendar.get(Calendar.AM_PM)), x, mYOffset, mAmPmPaint);
-
             String date_string = getDayOfWeekString(resources, mCalendar.get(Calendar.DAY_OF_WEEK)) + ", " + getMonthOfYearString(resources, mCalendar.get(Calendar.MONTH)) + " " + mCalendar.get(Calendar.DAY_OF_MONTH) + " " + new String(mCalendar.get(Calendar.YEAR) + "");
             canvas.drawText(date_string, mXOffset, mYOffset + mLineHeight * 2, mDatePaint);
 
@@ -414,16 +408,12 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             if (!isInAmbientMode() && mWeatherIcon != null) {
                 canvas.drawBitmap(mWeatherIcon, x, mYOffset + mLineHeight * 2, mTextPaint);
             }
-            if (mWeatherHigh != null) {
+            if (mWeatherHigh != null && mWeatherLow != null) {
                 canvas.drawText(mWeatherHigh + "\u00b0" + "c", x, mYOffset, mHighTempPaint);
-            } else {
-                Log.i("Ygritte", "High Temp : " + mWeatherHigh);
-            }
-
-            if (mWeatherLow != null) {
                 canvas.drawText(mWeatherLow + "\u00b0" + "c", x, mYOffset + mLineHeight * 2, mLowTempPaint);
             } else {
                 Log.i("Ygritte", "Low Temp : " + mWeatherLow);
+                Log.i("Ygritte", "High Temp : " + mWeatherHigh);
             }
 
 
@@ -491,14 +481,14 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
                             mWeatherHigh = dataMap.getString(KEY_HIGH);
                             Log.d(TAG, "High = " + mWeatherHigh);
                         } else {
-                            Log.d(TAG, "No Data Available High temp");
+                            Log.d(TAG, "No Weather Data High temp available");
                         }
 
                         if (dataMap.containsKey(KEY_LOW)) {
                             mWeatherLow = dataMap.getString(KEY_LOW);
                             Log.d(TAG, "Low = " + mWeatherLow);
                         } else {
-                            Log.d(TAG, "No Data Available Low temp");
+                            Log.d(TAG, "No Weather Data Low temp available");
                         }
 
                         if (dataMap.containsKey(KEY_WEATHER_ID)) {

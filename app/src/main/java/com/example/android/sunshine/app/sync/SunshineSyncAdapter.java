@@ -127,7 +127,6 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter implements 
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(Bundle bundle) {
-
                         Log.v(LOG_TAG, "Sync : Google API Client was connected");
                     }
 
@@ -175,8 +174,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter implements 
             // Construct the URL for the OpenWeatherMap query
             // Possible parameters are avaiable at OWM's forecast API page, at
             // http://openweathermap.org/API#forecast
-            final String FORECAST_BASE_URL =
-                    "http://api.openweathermap.org/data/2.5/forecast/daily?";
+            final String FORECAST_BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
             final String QUERY_PARAM = "q";
             final String LAT_PARAM = "lat";
             final String LON_PARAM = "lon";
@@ -268,9 +266,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter implements 
      * Fortunately parsing is easy:  constructor takes the JSON string and converts it
      * into an Object hierarchy for us.
      */
-    private void getWeatherDataFromJson(String forecastJsonStr,
-                                        String locationSetting)
-            throws JSONException {
+    private void getWeatherDataFromJson(String forecastJsonStr, String locationSetting) throws JSONException {
 
         // Now we have a String representing the complete forecast in JSON Format.
         // Fortunately parsing is easy:  constructor takes the JSON string and converts it
@@ -426,6 +422,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter implements 
                 updateWidgets();
                 updateMuzei();
                 notifyWeather();
+                watchFaceData();
             }
             Log.d(LOG_TAG, "Sync Complete. " + cVVector.size() + " Inserted");
             setLocationStatus(getContext(), LOCATION_STATUS_OK);
