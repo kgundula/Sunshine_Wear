@@ -200,8 +200,8 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             mMinutePaint = createTextPaint(resources.getColor(R.color.digital_text));
             mAmPmPaint = createTextPaint(resources.getColor(R.color.digital_text));
             mColonPaint = createTextPaint(resources.getColor(R.color.digital_text));
-            mHighTempPaint = createTextPaint(resources.getColor(R.color.digital_text));
-            mLowTempPaint = createTextPaint(resources.getColor(R.color.digital_text));
+            mHighTempPaint = createBoldTextPaint(resources.getColor(R.color.digital_text));
+            mLowTempPaint = createBoldTextPaint(resources.getColor(R.color.digital_text));
             mTextPaint = createTextPaint(resources.getColor(R.color.digital_text));
 
             mCalendar = Calendar.getInstance();
@@ -226,6 +226,16 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             paint.setAntiAlias(true);
             return paint;
         }
+
+        private Paint createBoldTextPaint(int textColor) {
+            Paint paint = new Paint();
+            paint.setColor(textColor);
+            paint.setTypeface(NORMAL_TYPEFACE);
+            paint.setAntiAlias(true);
+            return paint;
+        }
+
+
 
         @Override
         public void onVisibilityChanged(boolean visible) {

@@ -598,6 +598,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter implements 
 
         if (wearAvailable) {
             PutDataMapRequest putDataMapRequest = PutDataMapRequest.create(WEATHER_PATH);
+            putDataMapRequest.getDataMap().putLong("time", System.currentTimeMillis());
             putDataMapRequest.getDataMap().putString(KEY_HIGH, Utility.formatTemperature(context, high));
             putDataMapRequest.getDataMap().putString(KEY_LOW, Utility.formatTemperature(context, low));
             putDataMapRequest.getDataMap().putInt(KEY_WEATHER_ID, weatherId);
